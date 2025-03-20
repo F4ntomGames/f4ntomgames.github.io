@@ -12,6 +12,5 @@ ErrorDocument 404 /404.html
 ErrorDocument 500 /500.html
 
 <Files "secret">
-    Order allow,deny
-    Deny from all
+    Require all denied
 </Files>
