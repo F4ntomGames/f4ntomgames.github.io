@@ -1,5 +1,5 @@
 ﻿html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
 }
 
 body {
@@ -142,15 +142,17 @@ footer a{
     border-radius: 25px;
     transition: all 0.5s;
     user-select: none;
+    transform: scale(0.8);
+    will-change: transform;
 }
 
 .card:hover {
     border: 2px solid black;
-    transform: scale(1.1);
+    transform: scale(1.1) !important;
 }
 
 .card:active {
-    transform: scale(0.95) rotateZ(1.7deg);
+    transform: scale(0.95) rotateZ(1.7deg) !important;
 }
 
 .container {
@@ -175,6 +177,11 @@ footer a{
     font-weight: bold;
     letter-spacing: -0.015em;
     padding-left: 2rem;
+}
+
+.fade-text {
+    opacity: 0.1;
+    transition: opacity 0.5s;
 }
 
 #logo {

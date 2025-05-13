@@ -52,11 +52,11 @@
 
 <main>
     <section id="Geometry Jump Reimagined">
-        <h1 class="sectionTitle">Geometry Jump Reimagined</h1>
+        <h1 class="sectionTitle fade-text">Geometry Jump Reimagined</h1>
         <div class="sectionInfo">
             <div>
-                <h2>Experience dynamic rhythm and geometric leaps in a world reborn!</h2>
-                <p>Immerse yourself in vibrant, evolving geometric landscapes that transform with the beat, challenging your timing and reflexes at every turn ⚡. Master precision platforming in levels that blend high-octane action with mesmerizing art 🌐.</p>
+                <h2 class="fade-text">Experience dynamic rhythm and geometric leaps in a world reborn!</h2>
+                <p class="fade-text">Immerse yourself in vibrant, evolving geometric landscapes that transform with the beat, challenging your timing and reflexes at every turn ⚡. Master precision platforming in levels that blend high-octane action with mesmerizing art 🌐.</p>
                 <div>
                     <a class="playstore-button" href="https://play.google.com/store/apps/details?id=com.F4ntomGames.GeometryJumpReimagined">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="icon" viewBox="0 0 512 512">
@@ -115,11 +115,11 @@
         </div>
     </section>
     <section id="Geometry Jump 3D">
-        <h1 class="sectionTitle">Geometry Jump 3D</h1>
+        <h1 class="sectionTitle fade-text">Geometry Jump 3D</h1>
         <div class="sectionInfo">
             <div>
-                <h2>💫 Welcome to the mesmerizing universe</h2>
-                <p>Embark on an extraordinary rhythmic journey where your senses harmonize with the beats. Immerse yourself in this 3D rhythmic game that challenges your reflexes and unleashes creativity!</p>
+                <h2 class="fade-text">💫 Welcome to the mesmerizing universe</h2>
+                <p class="fade-text">Embark on an extraordinary rhythmic journey where your senses harmonize with the beats. Immerse yourself in this 3D rhythmic game that challenges your reflexes and unleashes creativity!</p>
                 <div>
                     <a class="playstore-button" href="https://play.google.com/store/apps/details?id=com.F4ntomGames.GeometryJump3D">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="icon" viewBox="0 0 512 512">
@@ -169,12 +169,12 @@
         </div>
     </section>
     <section id="about">
-        <h1 class="sectionTitle">About</h1>
+        <h1 class="sectionTitle fade-text">About</h1>
         <div class="sectionInfo">
             <div><img src="images/iconSmall.webp" alt="App Icon" id="icon" height="200" width="200" loading="lazy"></div>
             <div id="aboutDiv">
-                <h2>🚀 Join the Rhythmic Fellowship</h2>
-                <p>Join our vibrant Discord community for rhythm game enthusiasts! Connect, share high scores, and level up your rhythm skills together.</p>
+                <h2 class="fade-text">🚀 Join the Rhythmic Fellowship</h2>
+                <p class="fade-text">Join our vibrant Discord community for rhythm game enthusiasts! Connect, share high scores, and level up your rhythm skills together.</p>
                 <div class="tooltip-container">
                     <a class="discord-button" href="https://discord.gg/FExhK86b4z">
                     <span class="tooltip">Join now!</span>
@@ -208,6 +208,7 @@
 </footer>
 
 <script defer>
+    // Parallax effect for the monster image
     const monster = document.querySelector('#monster');
     let y = 0, y2 = 0;
 
@@ -225,6 +226,98 @@
 
     document.addEventListener('mousemove', parallax);
     document.addEventListener('scroll', parallaxScroll);
+    //
+    
+    // Smooth wheel scrolling
+    // Smooth scroll variables
+    let targetScroll = 0;
+    let currentScroll = 0;
+    const lerpFactor = 0.01;
+
+    // Lerp function
+    function lerp(start, end, factor) {
+        return start + (end - start) * factor;
+    }
+
+    // Get all card elements
+    const cards = document.querySelectorAll('.card');
+    const textElements = document.querySelectorAll('.fade-text');
+
+    // Function to update card scaling based on viewport position
+    function updateCardScale() {
+        cards.forEach(card => {
+            const rect = card.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            const visibleFraction = Math.max(0, Math.min(1, (windowHeight - rect.top) / (rect.height + windowHeight * 0.1)));
+            const scale = 0.8 + visibleFraction * 0.2;
+            if (!card.matches(':hover') && !card.matches(':active')) {
+                card.style.transform = `scale(${scale})`;
+            }
+        });
+
+        textElements.forEach(text => {
+            const rect = text.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            const visibleFraction = Math.max(0, Math.min(1, (windowHeight - rect.top) / (rect.height + windowHeight * 0.2)));
+            const opacity = 0.1 + visibleFraction * 0.9; // From 0.3 to 1.0
+            text.style.opacity = opacity;
+        });
+    }
+
+    // Animation loop for smooth scrolling
+    function smoothScroll() {
+        currentScroll = lerp(currentScroll, targetScroll, lerpFactor);
+        window.scrollTo(0, currentScroll);
+        updateCardScale();
+        if (Math.abs(currentScroll - targetScroll) > 0.1) {
+            requestAnimationFrame(smoothScroll);
+        }
+    }
+
+    // Handle wheel scrolling
+    window.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        targetScroll += e.deltaY;
+        targetScroll = Math.max(0, Math.min(targetScroll, document.body.scrollHeight - window.innerHeight));
+        requestAnimationFrame(smoothScroll);
+    }, { passive: false });
+
+    // Handle anchor link clicks
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = anchor.getAttribute('href').substring(1);
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+                targetScroll = targetElement.offsetTop;
+                requestAnimationFrame(smoothScroll);
+            }
+        });
+    });
+
+    // Handle scrollbar/keyboard scrolling
+    window.addEventListener('scroll', () => {
+        currentScroll = window.scrollY;
+        updateCardScale();
+    });
+
+    // Initialize scroll position and card scaling
+    document.addEventListener('DOMContentLoaded', () => {
+        currentScroll = window.scrollY;
+        targetScroll = currentScroll;
+        if (window.location.hash) {
+            const targetId = window.location.hash.substring(1);
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+                targetScroll = targetElement.offsetTop;
+                currentScroll = targetScroll;
+                window.scrollTo(0, currentScroll);
+            }
+        }
+        updateCardScale();
+        requestAnimationFrame(smoothScroll);
+    });
+    
 </script>
 </body>
 </html>
