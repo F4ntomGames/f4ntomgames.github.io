@@ -294,3 +294,5 @@ smartclip.net, 27985, RESELLER
 tradplusad.com, b3fca24bd11c1242, RESELLER
 yeahmobi.com, 5135195, RESELLER
 lunamedia.io, 2fdb16a1-5025-4c41-9b17-e01e47ebc8b4, RESELLER, 524ecb396915caaf
+bidmachine.io, 113, RESELLER
+zmaticoo.com, 5135063, RESELLER
