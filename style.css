@@ -29,6 +29,16 @@ section {
     padding-bottom: 1rem;
 }
 
+.sectionStoreButtons{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
 .layout a {
     text-decoration: none;
 }
@@ -278,7 +288,7 @@ footer a{
 .playstore-button:hover {
     color: white;
     background-color: transparent;
-    border: 1px solid black;
+    border: 2px solid black;
     transform: scale(1.1);
 }
 
